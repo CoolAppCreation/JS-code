@@ -1,2 +1,2 @@
 # JS-code
-Here is code for JS Hous
+Here is code for JS House
