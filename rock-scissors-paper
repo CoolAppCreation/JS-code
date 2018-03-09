@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Камень, ножницы, бумага</title>
+	<meta charset="utf-8">
+</head>
+<body>
+<script type="text/javascript">
+	//Переменные для подсчета статистики
+	var countPersonWin = 0;
+	var countComputerWin = 0;
+	var countComputerPaper = 0;
+	var countComputerRock = 0;
+	var countComputerScissors = 0;
+	var greeting = confirm('Привет, давай сыграем в игру "Камень, ножницы, бумага"');
+	if(greeting == false){
+		greeting = confirm('Почему? Давай сыграем');
+		if(greeting == false){
+			alert("Жаль, пока тогда")  
+		}else{
+			game();
+		}
+	}else{
+		game();
+	}
+	//Функция самой игры
+	function game(){
+		var personAnswer = prompt("Что выбираешь: камень, ножницы или бумагу?");
+		var checkVariable = 0;
+		while(checkVariable == 0){
+			if(personAnswer.toUpperCase() == "КАМЕНЬ" || personAnswer.toUpperCase() == "НОЖНИЦЫ" || personAnswer.toUpperCase() == "БУМАГА"){
+				checkVariable = 1;
+			}else{
+				personAnswer = prompt("Ты ввел неккоретные данные. Повтори попытку.\nЧто выбираешь: камень, ножницы или бумагу?");
+			}
+		}
+		var thingsStock = ["Камень","Ножницы","Бумага"]
+		var computerAnswer = thingsStock[Math.floor(Math.random() * 3)]
+		switch(personAnswer.toUpperCase()){
+			case "КАМЕНЬ":
+				personAnswer = "Камень";
+				break;
+			case "НОЖНИЦЫ":
+				personAnswer = "Ножницы";
+				break;
+			case "БУМАГА":
+				personAnswer = "Бумага";
+				break;
+		}
+		while(personAnswer == computerAnswer){
+			computerAnswer = thingsStock[Math.floor(Math.random() * 3)];
+		}
+		switch(computerAnswer){
+			case "Камень":
+				countComputerRock += 1;
+				break;
+			case "Ножницы":
+				countComputerScissors += 1;
+				break;
+			case "Бумага":
+				countComputerPaper += 1;
+				break;
+		}
+		if(personAnswer == "Ножницы" && computerAnswer == "Бумага" || personAnswer == "Бумага" && computerAnswer == "Камень" || personAnswer == "Камень" && computerAnswer == "Ножницы"){
+			alert("Твой вариант был: " + personAnswer + "\nВариант компьютера был: " + computerAnswer + "\nПоздравляем, ты выиграл");
+			countPersonWin += 1;
+		}else if(personAnswer == "Бумага" && computerAnswer == "Ножницы" || personAnswer == "Камень" && computerAnswer == "Бумага" || personAnswer == "Ножницы" && computerAnswer == "Камень") {
+			alert("Твой вариант был: " + personAnswer + "\nВариант компьютера был: " + computerAnswer + "\nК сожалению, ты проиграл");
+			countComputerWin += 1;
+		}
+		repeatGameAgain();
+	}
+	//Функция возможности повтора игры
+	function repeatGameAgain(){
+	if(countComputerWin > 0 || countPersonWin > 0){
+	var repeatGame = confirm("Сыграем еще раз?")
+	if(repeatGame == true){
+		game();
+	}else{
+		var getStatictic = confirm("Хочешь получить статистику игр");
+		if(getStatictic == true){
+			alert("Общее количество игр: "+(countPersonWin + countComputerWin)+"\nКоличество твоих побед: "+countPersonWin+"\nКоличество побед компьютера: "+countComputerWin+"\nВероятность выпадения:\nБумага - "+(countComputerPaper/(countPersonWin + countComputerWin)*100)+"%\nКамень - "+(countComputerRock/(countPersonWin + countComputerWin)*100)+"%\nНожницы - "+(countComputerScissors/(countPersonWin + countComputerWin)*100)+"%");
+		}
+	}
+	}
+	}
+</script>
+</body>
+</html>
